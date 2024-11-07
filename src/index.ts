@@ -5,12 +5,13 @@ import dotenv from 'dotenv';
 const app = express();
 
 // 動態選擇環境變數的檔案
-dotenv.config({ path: path.resolve(__dirname, `/environments/${ process.env.NODE_ENV }.env`) });
+dotenv.config({ path: path.resolve(__dirname, `./environments/${ process.env.NODE_ENV }.env`) });
 console.log(__dirname);
+console.log(process.env.NODE_ENV);
+console.log(process.env.PORT);
 
 app.get('/', (req, res, next) => {
     res.send('Hello, World!!進入到index.ts中!');
-    res.send('你好！');
 });
 
 
