@@ -12,11 +12,12 @@
    1. 修改「tsconfig.json」裡面內容。
 5. npm install @types/node @types/express --save-dev
 6. npm install ts-node --save-dev
-   1. 放棄使用「ts-node」。
 7. npm install --save-dev cross-env
    1. 修改package.json檔案內容
 8. npm install gulp gulp-clean-css gulp-sass sass --save-dev
    1. 目的為把js與scss檔案自動編譯到另一個資料夾裡面。
+9. 放棄使用「nodemon」
+   1.  放棄使用「nodemon」。
    
 ## 運作專案檔案腳本
 正式環境:
