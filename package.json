@@ -25,6 +25,7 @@
     "start:dev": " cross-env NODE_ENV=development ts-node ./src/index.ts",
     "start": "npm run build && cross-env NODE_ENV=production node ./dist/index.js",
     "build": "tsc",
-    "compile": "set NODE_ENV=development & tsc & gulp"
+    "compile": "set NODE_ENV=development & tsc & gulp",
+    "testRun": "cross-env NODE_ENV=development ts-node ./src/sever.ts"
   }
 }

@@ -1,4 +1,13 @@
 const gulp = require("gulp");
+const browserify = require("browserify");
+const source = require("vinyl-source-stream");
+const tsify = require("tsify");
+const paths = {
+  pages: ["src/*.html"],
+};
+const exec = require("child_process").exec;
+
+//豪呈程式碼
 // const concat = require("gulp-concat");
 const sass = require("gulp-sass")(require("sass"));
 const uglify = require("gulp-uglify-es").default;
@@ -9,6 +18,21 @@ const parallelList = [];
 console.log(process.env.NODE_ENV);
 debugger;
 
+//init html
+gulp.task("copy-html", function () {
+  return gulp.src(paths.pages).pipe(gulp.dest("dist"));
+});
+
+//init sever
+gulp.task("start-server", function (cb) {
+  exec("node server.js", function (err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  });
+});
+
+//豪呈程式碼
 parallelList.push("js");
 gulp.task("js", function () {
   var js = ["./src/js/*.js"];
