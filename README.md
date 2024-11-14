@@ -18,7 +18,9 @@
    1. 目的為把js與scss檔案自動編譯到另一個資料夾裡面。
 9. 放棄使用「nodemon」
    1.  放棄使用「nodemon」。
-   
+10. npm install gulp-cli gulp-typescript --save-dev
+11. npm install --save-dev gulp-typescript gulp-cli
+12. npm install --save-dev browserify tsify vinyl-source-stream
 ## 運作專案檔案腳本
 正式環境:
 
