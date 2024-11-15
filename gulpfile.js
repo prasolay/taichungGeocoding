@@ -67,6 +67,37 @@ gulp.task("copy-html", function () {
 //     .pipe(gulp.dest("dist"));
 // }
 
+//gpt程式碼
+gulp.task("bundle-js", function () {
+  if (process.env.NODE_ENV === "production") {
+    return browserify({
+      basedir: ".",
+      debug: true,
+      cache: {},
+      entries: ["src/js/index.ts"],
+      packageCache: {},
+    })
+      .plugin(tsify)
+      .bundle()
+      .pipe(source("bundle.js"))
+      .pipe(buffer()) // 需要 buffer 來使用 gulp-uglify
+      .pipe(uglify({ output: { comments: false } }))
+      .pipe(gulp.dest("./public/js/"));
+  } else {
+    return browserify({
+      basedir: ".",
+      debug: true,
+      cache: {},
+      entries: ["src/js/index.ts"],
+      packageCache: {},
+    })
+      .plugin(tsify)
+      .bundle()
+      .pipe(source("bundle.js"))
+      .pipe(gulp.dest("./public/js/"));
+  }
+});
+
 parallelList.push("css");
 gulp.task("css", function () {
   var css = ["./src/css/*.scss"];
@@ -111,35 +142,40 @@ gulp.task("start-server", function (cb) {
 
 gulp.task(
   "default",
-  gulp.parallel(parallelList),
-  function () {
-    // var ts = ["./src/js/*.ts"];
-    if (process.env.NODE_ENV === "production") {
-      return browserify({
-        basedir: ".",
-        debug: true,
-        cache: {},
-        entries: ["src/js/index.ts"],
-        packageCache: {},
-      })
-        .plugin(tsify)
-        .bundle()
-        .pipe(source("bundle.js"))
-        .pipe(uglify({ output: { comments: false } }))
-        .pipe(gulp.dest("./public/js/"));
-    } else {
-      return browserify({
-        basedir: ".",
-        debug: true,
-        cache: {},
-        entries: ["src/js/index.ts"],
-        packageCache: {},
-      })
-        .plugin(tsify)
-        .bundle()
-        .pipe(source("bundle.js"))
-        .pipe(gulp.dest("./public/js/"));
-    }
-  },
-  "start-server"
+  gulp.series(gulp.parallel(parallelList), "bundle-js", "start-server")
 );
+
+// gulp.task(
+//   "default",
+//   gulp.parallel(parallelList),
+//   function () {
+//     // var ts = ["./src/js/*.ts"];
+//     if (process.env.NODE_ENV === "production") {
+//       return browserify({
+//         basedir: ".",
+//         debug: true,
+//         cache: {},
+//         entries: ["src/js/index.ts"],
+//         packageCache: {},
+//       })
+//         .plugin(tsify)
+//         .bundle()
+//         .pipe(source("bundle.js"))
+//         .pipe(uglify({ output: { comments: false } }))
+//         .pipe(gulp.dest("./public/js/"));
+//     } else {
+//       return browserify({
+//         basedir: ".",
+//         debug: true,
+//         cache: {},
+//         entries: ["src/js/index.ts"],
+//         packageCache: {},
+//       })
+//         .plugin(tsify)
+//         .bundle()
+//         .pipe(source("bundle.js"))
+//         .pipe(gulp.dest("./public/js/"));
+//     }
+//   },
+//   "start-server"
+// );
