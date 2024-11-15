@@ -21,6 +21,7 @@
 10. npm install gulp-cli gulp-typescript --save-dev
 11. npm install --save-dev gulp-typescript gulp-cli
 12. npm install --save-dev browserify tsify vinyl-source-stream
+13. npm install --save-dev gulp-uglify-es
 ## 運作專案檔案腳本
 正式環境:
 
@@ -28,3 +29,13 @@
 生產環境
 
     npm run start:dev
+
+## 操作指令
+1. 把src資料夾內容更新到public資料夾：
+   ```
+   npm run compile
+   ```
+2. 運作測試環境：
+   ```
+   
+   ```
