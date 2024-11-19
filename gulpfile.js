@@ -33,62 +33,49 @@ gulp.task("copy-html", function () {
 });
 
 //啟動伺服器檔案
-gulp.task("start-server", function (cb) {
-  const server = spawn("node", ["server.js"], {
-    stdio: "inherit",
-    env: { ...process.env, NODE_ENV: "development", PORT: "3000" }, // 確保 PORT 被正確設定
+if (process.env.NODE_ENV == "development") {
+  gulp.task("start-server", function (cb) {
+    const server = spawn("node", ["server.js"], {
+      stdio: "inherit",
+      env: { ...process.env, NODE_ENV: "development", PORT: "3000" }, //port應該要從.env檔案讀取
+    });
+
+    server.on("error", (err) => {
+      console.error(`Failed to start server process: ${err}`);
+      cb(err);
+    });
+
+    server.on("close", (code) => {
+      if (code !== 0) {
+        console.error(`server process exited with code ${code}`);
+        cb(new Error(`server process exited with code ${code}`));
+      } else {
+        cb();
+      }
+    });
   });
+} else if (process.env.NODE_ENV == "production") {
+  gulp.task("start-server", function (cb) {
+    const server = spawn("node", ["server.js"], {
+      stdio: "inherit",
+      env: { ...process.env, NODE_ENV: "development", PORT: "8080" },
+    });
 
-  server.on("error", (err) => {
-    console.error(`Failed to start server process: ${err}`);
-    cb(err);
+    server.on("error", (err) => {
+      console.error(`Failed to start server process: ${err}`);
+      cb(err);
+    });
+
+    server.on("close", (code) => {
+      if (code !== 0) {
+        console.error(`server process exited with code ${code}`);
+        cb(new Error(`server process exited with code ${code}`));
+      } else {
+        cb();
+      }
+    });
   });
-
-  server.on("close", (code) => {
-    if (code !== 0) {
-      console.error(`server process exited with code ${code}`);
-      cb(new Error(`server process exited with code ${code}`));
-    } else {
-      cb();
-    }
-  });
-});
-
-// gulp.task("start-server", function (cb) {
-//   exec(
-//     " npx cross-env NODE_ENV=development && node server.js ",
-//     function (err, stdout, stderr) {
-//       if (err) {
-//         console.error(`exec error: ${err}`);
-//         return cb(err);
-//       }
-//       console.log(stdout);
-//       console.error(stderr);
-//       cb();
-//     }
-//   );
-// });
-
-// console.log(process.env.NODE_ENV);
-
-// if (process.env.NODE_ENV) {
-//   gulp.task("start-server", function (cb) {
-//     gulp
-//       .src(`./src/environments/${process.env.NODE_ENV}.env`)
-//       .pipe(dotenv())
-//       .pipe(rename("env.json")),
-//       exec(
-//         " npx cross-env NODE_ENV=development node server.js ",
-//         function (err, stdout, stderr) {
-//           console.log(stdout);
-//           console.log(stderr);
-//           cb(err);
-//         }
-//       );
-//   });
-// } else {
-//   throw new Error("系統開發環境變數設定錯誤!");
-// }
+}
 
 //增加scss
 parallelList.push("css");
