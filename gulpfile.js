@@ -4,9 +4,10 @@ import source from "vinyl-source-stream";
 import tsify from "tsify";
 import gulpSass from "gulp-sass";
 import * as sassMolde from "sass";
-import { exec } from "child_process";
-
 const sass = gulpSass(sassMolde);
+import { exec } from "child_process";
+// import dotenv from "gulp-dotenv";
+// import rename from "gulp-rename";
 
 // var gulp = require("gulp");
 // var browserify = require("browserify");
@@ -30,13 +31,42 @@ gulp.task("copy-html", function () {
   });
 });
 
+//啟動伺服器檔案
 gulp.task("start-server", function (cb) {
-  exec("node server.js", function (err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  });
+  exec(
+    " npx cross-env NODE_ENV=development && node server.js ",
+    function (err, stdout, stderr) {
+      if (err) {
+        console.error(`exec error: ${err}`);
+        return cb(err);
+      }
+      console.log(stdout);
+      console.error(stderr);
+      cb();
+    }
+  );
 });
+
+// console.log(process.env.NODE_ENV);
+
+// if (process.env.NODE_ENV) {
+//   gulp.task("start-server", function (cb) {
+//     gulp
+//       .src(`./src/environments/${process.env.NODE_ENV}.env`)
+//       .pipe(dotenv())
+//       .pipe(rename("env.json")),
+//       exec(
+//         " npx cross-env NODE_ENV=development node server.js ",
+//         function (err, stdout, stderr) {
+//           console.log(stdout);
+//           console.log(stderr);
+//           cb(err);
+//         }
+//       );
+//   });
+// } else {
+//   throw new Error("系統開發環境變數設定錯誤!");
+// }
 
 //增加scss
 parallelList.push("css");

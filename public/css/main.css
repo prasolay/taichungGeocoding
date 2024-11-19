@@ -2,6 +2,11 @@
 @import "https://js.arcgis.com/4.30/@arcgis/core/assets/esri/themes/light/main.css";
 html,
 body,
+
+#greeting{
+  font-size: 30px;
+  color: rgb(0, 255, 0);
+}
 #viewDiv {
   padding: 0;
   margin: 0;
