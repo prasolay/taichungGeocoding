@@ -6,6 +6,7 @@ import gulpSass from "gulp-sass";
 import * as sassMolde from "sass";
 const sass = gulpSass(sassMolde);
 import { exec } from "child_process";
+import { spawn } from "child_process";
 // import dotenv from "gulp-dotenv";
 // import rename from "gulp-rename";
 
@@ -33,19 +34,40 @@ gulp.task("copy-html", function () {
 
 //啟動伺服器檔案
 gulp.task("start-server", function (cb) {
-  exec(
-    " npx cross-env NODE_ENV=development && node server.js ",
-    function (err, stdout, stderr) {
-      if (err) {
-        console.error(`exec error: ${err}`);
-        return cb(err);
-      }
-      console.log(stdout);
-      console.error(stderr);
+  const server = spawn("node", ["server.js"], {
+    stdio: "inherit",
+    env: { ...process.env, NODE_ENV: "development", PORT: "3000" }, // 確保 PORT 被正確設定
+  });
+
+  server.on("error", (err) => {
+    console.error(`Failed to start server process: ${err}`);
+    cb(err);
+  });
+
+  server.on("close", (code) => {
+    if (code !== 0) {
+      console.error(`server process exited with code ${code}`);
+      cb(new Error(`server process exited with code ${code}`));
+    } else {
       cb();
     }
-  );
+  });
 });
+
+// gulp.task("start-server", function (cb) {
+//   exec(
+//     " npx cross-env NODE_ENV=development && node server.js ",
+//     function (err, stdout, stderr) {
+//       if (err) {
+//         console.error(`exec error: ${err}`);
+//         return cb(err);
+//       }
+//       console.log(stdout);
+//       console.error(stderr);
+//       cb();
+//     }
+//   );
+// });
 
 // console.log(process.env.NODE_ENV);
 
