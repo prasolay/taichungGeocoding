@@ -1,13 +1,24 @@
-var gulp = require("gulp");
-var browserify = require("browserify");
-var source = require("vinyl-source-stream");
-var tsify = require("tsify");
-const sass = require("gulp-sass")(require("sass"));
+import gulp from "gulp";
+import browserify from "browserify";
+import source from "vinyl-source-stream";
+import tsify from "tsify";
+import gulpSass from "gulp-sass";
+import * as sassMolde from "sass";
+import { exec } from "child_process";
+
+const sass = gulpSass(sassMolde);
+
+// var gulp = require("gulp");
+// var browserify = require("browserify");
+// var source = require("vinyl-source-stream");
+// var tsify = require("tsify");
+// const sass = require("gulp-sass")(require("sass"));
+// // var paths = {
+// //   pages: ["src/*.html"],
+// // };
+// var exec = require("child_process").exec;
+
 const parallelList = [];
-// var paths = {
-//   pages: ["src/*.html"],
-// };
-var exec = require("child_process").exec;
 
 //增加html檔案
 parallelList.push("copy-html");

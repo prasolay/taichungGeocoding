@@ -1,4 +1,4 @@
-{
+{ "type":"module",
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
@@ -27,6 +27,8 @@
     "start": "npm run build && cross-env NODE_ENV=production node ./dist/index.js",
     "build": "tsc",
     "compile": "set NODE_ENV=development & gulp",
-    "testRun": "cross-env NODE_ENV=development ts-node ./src/sever.ts"
+    "testRun": "cross-env NODE_ENV=development ts-node ./src/server.js",
+    "testRun2": "cross-env NODE_ENV=development & gulp",
+    "testRun3": "cross-env NODE_ENV=development node server.js"
   }
 }
