@@ -23,6 +23,7 @@
 12. npm install --save-dev browserify tsify vinyl-source-stream
 13. npm install --save-dev gulp-uglify-es
 14. npm install gulp-dotenv gulp-rename --save
+15. npm install --save-dev watchify gulp-util
 ## 運作專案檔案腳本
 正式環境:
 

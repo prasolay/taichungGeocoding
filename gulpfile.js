@@ -7,6 +7,8 @@ import * as sassMolde from "sass";
 const sass = gulpSass(sassMolde);
 import { exec } from "child_process";
 import { spawn } from "child_process";
+import watchify from "watchify";
+import gutil from "gulp-util";
 // import dotenv from "gulp-dotenv";
 // import rename from "gulp-rename";
 
@@ -21,6 +23,16 @@ import { spawn } from "child_process";
 // var exec = require("child_process").exec;
 
 const parallelList = [];
+
+const watchedBrowserify = watchify(
+  browserify({
+    basedir: ".",
+    debug: true,
+    entries: ["src/js/main.ts"],
+    cache: {},
+    packageCache: {},
+  })
+).plugin(tsify);
 
 //增加html檔案
 parallelList.push("copy-html");
@@ -99,23 +111,29 @@ gulp.task("css", function () {
   });
 });
 
-gulp.task(
-  "default",
-  gulp.series(
-    gulp.parallel(parallelList),
-    function () {
-      return browserify({
-        basedir: ".",
-        debug: true,
-        entries: ["src/js/main.ts"],
-        cache: {},
-        packageCache: {},
-      })
-        .plugin(tsify)
-        .bundle()
-        .pipe(source("bundle.js"))
-        .pipe(gulp.dest("public"));
-    },
-    "start-server"
-  )
-);
+//間聽瀏覽器檔案-JS檔
+function jsBundle() {
+  return watchedBrowserify
+    .bundle()
+    .pipe(source("bundle.js"))
+    .pipe(gulp.dest("public"));
+}
+
+function cssBundle() {
+  const css = ["./src/css/*.scss"];
+  return watchedBrowserify
+    .pipe(sass().on("error", sass.logError))
+    .pipe(gulp.dest("./public/css"));
+}
+
+// gulp.task(
+//   "default",
+//   gulp.series(gulp.parallel(parallelList), jsBundle, "start-server")
+// );
+
+gulp.task("default", gulp.series(gulp.parallel(parallelList), jsBundle));
+
+//間聽檔案
+watchedBrowserify.on("update", jsBundle, cssBundle);
+// watchedBrowserify.on("update", cssBundle);
+// watchedBrowserify.on("log", gutil.log);
