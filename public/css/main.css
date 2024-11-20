@@ -1,0 +1,220 @@
+@charset "UTF-8";
+@import "https://js.arcgis.com/4.30/@arcgis/core/assets/esri/themes/light/main.css";
+html,
+body,
+#greeting {
+  font-size: 40px;
+  color: rgb(81, 255, 0);
+}
+
+#viewDiv {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+#functionIconContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: absolute;
+  top: 100px;
+  right: 10px;
+}
+
+@media (max-width: 1200px) {
+  #functionIconContainer {
+    width: 75px;
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+#draggableSwitchLayerWindow {
+  width: 400px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  z-index: 10;
+  display: none; /* Initial state: hidden */
+  cursor: move;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.category {
+  margin: 10px 0;
+  cursor: pointer;
+  padding: 10px;
+  background-color: #a7d8ff;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.category p {
+  margin: 0;
+  text-align: center;
+  flex: 1;
+  border-radius: 0;
+}
+
+.category.active {
+  background-color: #2196f3;
+  color: white;
+}
+
+.layer-content {
+  display: none;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.layer-content.active {
+  display: block;
+}
+
+#addLayerTypeList {
+  display: none;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+#addLayerTypeList.active {
+  display: block;
+}
+
+.addLayerIcon {
+  width: 100%;
+  border: 0;
+  background-color: #D4EEFF;
+  font-weight: bold;
+  text-align: center;
+  color: #000000;
+  border-radius: 10px;
+  margin: 5px 0;
+}
+
+.addCsvLayerIcon {
+  width: 100%;
+  border: 0;
+  background-color: #FFD44A;
+  font-weight: bold;
+  text-align: center;
+  color: #000000;
+  border-radius: 10px;
+  margin: 5px 0;
+}
+
+#openBtn {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.layerList {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: flex-start;
+  position: relative;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.layerList input {
+  margin-left: auto;
+}
+
+.layerListLayerSpan {
+  display: inline-flex; /* 使元素支援 flexbox 佈局 */
+  align-items: center; /* 垂直居中對齊內容 */
+  justify-content: center; /* 水平居中對齊內容 */
+  width: 16px; /* 設定圖標的寬度 */
+  height: 16px; /* 設定圖標的高度 */
+  border-radius: 100%; /* 設定為圓形 */
+  background-color: rgba(245, 245, 245, 0.4117647059); /* 設定圓形背景顏色 */
+  color: #9C9C9C; /* 設定圖標顏色 */
+}
+
+.layerListLayerSpan.active {
+  display: inline-flex; /* 使元素支援 flexbox 佈局 */
+  align-items: center; /* 垂直居中對齊內容 */
+  justify-content: center; /* 水平居中對齊內容 */
+  width: 16px; /* 設定圖標的寬度 */
+  height: 16px; /* 設定圖標的高度 */
+  border-radius: 100%; /* 設定為圓形 */
+  background-color: #9fd4ff; /* 設定圓形背景顏色 */
+  color: rgb(83, 83, 83); /* 設定圖標顏色 */
+}
+
+#addFileLayerWindow {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  z-index: 10;
+  display: none; /* Initial state: hidden */
+  cursor: move;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#addShpFileWindow {
+  width: 400px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  z-index: 10;
+  display: none; /* Initial state: hidden */
+  cursor: move;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#addKmlFileWindow {
+  width: 400px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  z-index: 10;
+  display: none; /* Initial state: hidden */
+  cursor: move;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#shpPreView {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 90%;
+  position: relative;
+}
+
+#addFilePreviewWindow {
+  width: 400px;
+  height: 300px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  position: absolute;
+  top: 50px;
+  left: 500px;
+  z-index: 10;
+  display: none; /* Initial state: hidden */
+  cursor: move;
+  padding: 10px;
+  border-radius: 10px;
+}

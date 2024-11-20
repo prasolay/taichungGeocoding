@@ -1,0 +1,477 @@
+// @import "/node_modules/@arcgis/core/assets/esri/themes/dark/main.css";
+// @import "/node_modules/@esri/calcite-components/dist/calcite/calcite.css";
+
+@import "https://js.arcgis.com/4.30/@arcgis/core/assets/esri/themes/light/main.css";
+// @import "https://js.arcgis.com/calcite-components/2.9.0/calcite.css"; 
+
+html,
+body,
+
+#greeting {
+font-size: 40px;
+color: rgb(81, 255, 0);
+}
+
+#viewDiv {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+#functionIconContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: absolute;
+  top: 100px;
+  right: 10px;
+}
+
+@media (max-width: 1200px) {
+  #functionIconContainer {
+    width: 75px;
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+#draggableSwitchLayerWindow {
+  width: 400px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  z-index: 10;
+  display: none; /* Initial state: hidden */
+  cursor: move;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.category {
+  margin: 10px 0;
+  cursor: pointer;
+  padding: 10px;
+  background-color: #a7d8ff;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.category p {
+  margin: 0;
+  text-align: center;
+  flex: 1;
+  border-radius: 0;
+}
+
+.category.active {
+  background-color: #2196f3;
+  color: white;
+}
+
+.layer-content {
+  display: none;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.layer-content.active {
+  display: block;
+}
+
+//加入圖層視窗樣式設定
+#addLayerTypeList {
+  display: none;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+#addLayerTypeList.active {
+  display: block;
+}
+
+.addLayerIcon{
+  width: 100%;
+  border:0;
+  background-color:#D4EEFF;
+  font-weight: bold;
+  text-align:center;
+  color:#000000;
+  border-radius: 10px;
+  margin: 5px 0;
+}
+
+.addCsvLayerIcon{
+  width: 100%;
+  border:0;
+  background-color:#FFD44A;
+  font-weight: bold;
+  text-align:center;
+  color:#000000;
+  border-radius: 10px;
+  margin: 5px 0;
+}
+
+#openBtn {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.layerList {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: flex-start;
+  position: relative;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.layerList input {
+  margin-left: auto;
+}
+
+.layerListLayerSpan {
+  display: inline-flex; /* 使元素支援 flexbox 佈局 */
+  align-items: center; /* 垂直居中對齊內容 */
+  justify-content: center; /* 水平居中對齊內容 */
+  width: 16px; /* 設定圖標的寬度 */
+  height: 16px; /* 設定圖標的高度 */
+  border-radius: 100%; /* 設定為圓形 */
+  background-color: rgba(245, 245, 245, 0.4117647059); /* 設定圓形背景顏色 */
+  color: #9C9C9C; /* 設定圖標顏色 */
+}
+
+.layerListLayerSpan.active {
+  display: inline-flex; /* 使元素支援 flexbox 佈局 */
+  align-items: center; /* 垂直居中對齊內容 */
+  justify-content: center; /* 水平居中對齊內容 */
+  width: 16px; /* 設定圖標的寬度 */
+  height: 16px; /* 設定圖標的高度 */
+  border-radius: 100%; /* 設定為圓形 */
+  background-color: #9fd4ff; /* 設定圓形背景顏色 */
+  color: rgb(83, 83, 83); /* 設定圖標顏色 */
+}
+
+#addFileLayerWindow {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  z-index: 10;
+  display: none; /* Initial state: hidden */
+  cursor: move;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#addShpFileWindow{
+  width: 400px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  z-index: 10;
+  display: none; /* Initial state: hidden */
+  cursor: move;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#addKmlFileWindow{
+  width: 400px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  z-index: 10;
+  display: none; /* Initial state: hidden */
+  cursor: move;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#shpPreView {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 90%;
+  position: relative;
+}
+
+#addFilePreviewWindow {
+  width: 400px;
+  height: 300px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  position: absolute;
+  top: 50px;
+  left: 500px;
+  z-index: 10;
+  display: none; /* Initial state: hidden */
+  cursor: move;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+
+// .d-none {
+//     display: none !important;
+// }
+
+// label,
+// span {
+//     align-self: center;
+// }
+
+
+// .colorblock {
+//     width: 13px;
+//     height: 13px;
+//     align-self: center;
+//     margin-right: 2px;
+
+//     &.x::after{
+//         content: "x";
+//         display: block;
+//         font-size: 1.1em;
+//         text-align: center;
+//     }
+// }
+
+// .topBox {
+//     position: absolute;
+//     top: 20px;
+//     width: 100%;
+
+//     select {
+//         min-width: 60px;
+//     }
+
+//     .box {
+//         user-select: none;
+//         width: max-content;
+//         margin: auto;
+//         display: flex;
+//         justify-content: center;
+//         flex-wrap: wrap;
+//         background-color: rgb(255 255 255);
+//         padding: 10px;
+//         outline: 2px solid #898989;
+//         border-radius: 5px;
+//         max-width: 80vw;
+
+//         input {
+//             max-width: 55px;
+//         }
+
+//         span {
+//             margin: 0 2px;
+//         }
+
+//         .item {
+//             display: flex;
+//             flex-wrap: nowrap;
+//             margin: 2px;
+//         }
+//     }
+
+//     .secondbox {
+//         user-select: none;
+//         width: max-content;
+//         margin: auto;
+//         display: flex;
+//         justify-content: center;
+//         flex-wrap: wrap;
+//         background-color: rgb(255 255 255);
+//         padding: 10px;
+//         outline: 2px solid #898989;
+//         border-radius: 5px;
+//         max-width: 80vw;
+//         margin-top: 7px;
+
+//         input {
+//             max-width: 55px;
+//         }
+
+//         span {
+//             margin: 0 2px;
+//         }
+
+//         .item {
+//             display: flex;
+//             flex-wrap: nowrap;
+//             margin: 0 2px;
+//         }
+//     }
+// }
+
+// .leftbox {
+//     position: absolute;
+//     left: 20px;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     height: 100%;
+
+//     .box {
+//         user-select: none;
+//         width: max-content;
+//         margin: auto;
+//         display: flex;
+//         justify-content: center;
+//         flex-direction: column;
+//         background-color: rgb(255 255 255);
+//         padding: 10px;
+//         outline: 2px solid #898989;
+//         border-radius: 5px;
+
+//         .layersbox,
+//         .funbox,
+//         .desc {
+//             display: flex;
+//             justify-content: center;
+//             flex-direction: column;
+
+//             input[type=range] {
+//                 display: block;
+//             }
+
+//             .title {
+//                 font-weight: bold;
+//                 text-align: center;
+//             }
+//         }
+//     }
+// }
+
+// .rightbox {
+//     position: absolute;
+//     right: 20px;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     height: 100%;
+
+//     .box {
+//         user-select: none;
+//         width: max-content;
+//         margin: auto;
+//         display: flex;
+//         justify-content: center;
+//         flex-direction: column;
+//         background-color: rgb(255 255 255);
+//         padding: 10px;
+//         outline: 2px solid #898989;
+//         border-radius: 5px;
+
+//         .item {
+//             display: flex;
+//             justify-content: center;
+//             flex-direction: column;
+
+//             .chkbox {
+//                 display: flex;
+//                 flex-wrap: nowrap;
+//             }
+
+//             .item-box {
+//                 height: 460px;
+//                 overflow-y: auto;
+//                 background-color: rgb(0 0 0 / 6%);
+//                 border-radius: 2px;
+//                 outline: 1px solid #5a5a5a;
+//                 display: flex;
+//                 flex-direction: column;
+//                 padding: 5px;
+
+//                 .item-box-item {
+//                     display: flex;
+//                     flex-wrap: nowrap;
+//                 }
+
+//                 &::-webkit-scrollbar {
+//                     height: 10px;
+//                     background-color: whitesmoke;
+//                     width: 5px;
+//                 }
+
+//                 &::-webkit-scrollbar-thumb {
+//                     border-radius: 10px;
+//                     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+//                     background-color: #005fff91;
+//                 }
+
+//                 &::-webkit-scrollbar-track {
+//                     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+//                     border-radius: 10px;
+//                     background-color: whitesmoke;
+//                 }
+
+//             }
+
+//             .iconbox {
+//                 margin-left: auto;
+//                 padding-left: 3px;
+
+//                 img {
+//                     width: 18px;
+//                     cursor: pointer;
+//                     filter: opacity(0.5);
+//                     transform: scale(0.9);
+
+//                     &:hover {
+//                         filter: opacity(1);
+//                         transform: scale(1);
+//                     }
+//                 }
+//             }
+
+//             .title {
+//                 background-color: #ffffcc;
+//                 color: #155615;
+//                 text-align: center;
+//                 font-weight: bold;
+//             }
+//         }
+//     }
+// }
+
+// .loading {
+//     z-index: 1000;
+//     position: fixed;
+//     top: 0;
+//     display: flex;
+//     width: 100vw;
+//     height: 100vh;
+//     background-color: #00000033;
+//     justify-content: center;
+//     vertical-align: middle;
+//     flex-direction: column;
+//     text-align: center;
+
+//     label {
+//         font-size: 2em;
+//         font-weight: bolder;
+//         display: block;
+//     }
+// }
+
+// .leaflet-popup-content p {
+//     margin: 0;
+// }
+
+// .leaflet-popup-content-wrapper {
+//     background: rgb(255 255 255 / 92%);
+// }
