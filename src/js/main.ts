@@ -4,3 +4,5 @@ function showHello(divName: string, name: string) {
   elt.innerText = sayHello(name);
 }
 showHello("greeting", "TypeScript");
+// import { ol_map } from "map";
+// const mainMap = ol_map;

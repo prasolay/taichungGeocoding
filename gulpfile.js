@@ -5,10 +5,9 @@ import tsify from "tsify";
 import gulpSass from "gulp-sass";
 import * as sassMolde from "sass";
 const sass = gulpSass(sassMolde);
-import { exec } from "child_process";
 import { spawn } from "child_process";
 import watchify from "watchify";
-import gutil from "gulp-util";
+import log from "fancy-log";
 // import dotenv from "gulp-dotenv";
 // import rename from "gulp-rename";
 
@@ -114,7 +113,14 @@ gulp.task("css", function () {
 //間聽瀏覽器檔案-JS檔
 parallelList.push("bundle-js");
 function bundleJs(bundler) {
-  return bundler.bundle().pipe(source("bundle.js")).pipe(gulp.dest("public"));
+  return bundler
+    .bundle()
+    .on("error", (err) => {
+      log.error("Bundle Error:", err.message);
+      this.emit("end");
+    })
+    .pipe(source("bundle.js"))
+    .pipe(gulp.dest("public"));
 }
 
 gulp.task("bundle-js", function () {
