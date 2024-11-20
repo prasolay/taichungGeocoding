@@ -37,7 +37,11 @@ if (process.env.NODE_ENV == "development") {
   gulp.task("start-server", function (cb) {
     const server = spawn("node", ["server.js"], {
       stdio: "inherit",
-      env: { ...process.env, NODE_ENV: "development", PORT: "3000" }, //port應該要從.env檔案讀取
+      env: {
+        ...process.env,
+        NODE_ENV: process.env.NODE_ENV,
+        PORT: process.env.NODE_ENV.PORT,
+      }, //port應該要從.env檔案讀取
     });
 
     server.on("error", (err) => {
@@ -58,7 +62,11 @@ if (process.env.NODE_ENV == "development") {
   gulp.task("start-server", function (cb) {
     const server = spawn("node", ["server.js"], {
       stdio: "inherit",
-      env: { ...process.env, NODE_ENV: "development", PORT: "8080" },
+      env: {
+        ...process.env,
+        NODE_ENV: process.env.NODE_ENV,
+        PORT: process.env.NODE_ENV.PORT,
+      }, //port應該要從.env檔案讀取
     });
 
     server.on("error", (err) => {

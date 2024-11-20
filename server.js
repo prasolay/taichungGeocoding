@@ -20,7 +20,6 @@ dotenv.config({
     `./src/environments/${process.env.NODE_ENV}.env`
   ),
 });
-console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}`);
 // 讀取 index.html
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "mainMap.html"));
