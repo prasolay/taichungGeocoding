@@ -112,6 +112,26 @@ gulp.task("css", function () {
 });
 
 //間聽瀏覽器檔案-JS檔
+parallelList.push("bundle-js");
+function bundleJs(bundler) {
+  return bundler.bundle().pipe(source("bundle.js")).pipe(gulp.dest("public"));
+}
+
+gulp.task("bundle-js", function () {
+  const bundler = browserify({
+    basedir: ".",
+    debug: true,
+    entries: ["./src/js/main.ts"],
+    cache: {},
+    packageCache: {},
+    plugin: [watchify],
+  }).plugin(tsify);
+
+  bundler.on("update", () => bundleJs(bundler));
+
+  return bundleJs(bundler);
+});
+
 function jsBundle() {
   return watchedBrowserify
     .bundle()
@@ -131,9 +151,23 @@ function cssBundle() {
 //   gulp.series(gulp.parallel(parallelList), jsBundle, "start-server")
 // );
 
-gulp.task("default", gulp.series(gulp.parallel(parallelList), jsBundle));
+//定義間聽檔案任務
+// 定義監視任務
+gulp.task("watch", function () {
+  gulp.watch("./src/css/*.scss", gulp.series("css"));
+  gulp.watch("./src/*.html", gulp.series("copy-html"));
+  gulp.watch("./src/js/**/*.ts", gulp.series("bundle-js"));
+});
+
+gulp.task(
+  "default",
+  gulp.series(
+    gulp.parallel(parallelList),
+    gulp.parallel("watch", "start-server")
+  )
+);
 
 //間聽檔案
-watchedBrowserify.on("update", jsBundle, cssBundle);
+// watchedBrowserify.on("update", jsBundle, cssBundle);
 // watchedBrowserify.on("update", cssBundle);
 // watchedBrowserify.on("log", gutil.log);
