@@ -1,16 +1,22 @@
 // @import "/node_modules/@arcgis/core/assets/esri/themes/dark/main.css";
 // @import "/node_modules/@esri/calcite-components/dist/calcite/calcite.css";
+@import "/css/ol.css";
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
 
 @import "https://js.arcgis.com/4.30/@arcgis/core/assets/esri/themes/light/main.css";
 // @import "https://js.arcgis.com/calcite-components/2.9.0/calcite.css"; 
-
-html,
-body,
-
-#greeting {
-font-size: 40px;
-color: rgb(81, 255, 0);
-}
 
 #viewDiv {
   padding: 0;

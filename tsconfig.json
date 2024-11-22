@@ -21,7 +21,11 @@
 {
   "compilerOptions": {
     "noImplicitAny": true,
-    "target": "es5"
+    "target": "es6",
+    "baseUrl": "./src",
+    "paths": {
+      "ol/*": ["../node_modules/ol/*"] // 設定 ol 模組的路徑
+    }
   },
   "forceConcientCasingInFileNames": true,
   "include": ["./src/**/*.ts"],

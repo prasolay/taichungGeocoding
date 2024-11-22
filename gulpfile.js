@@ -102,7 +102,12 @@ gulp.task("css", function () {
   const css = ["./src/css/*.scss"];
   gulp
     .src(css)
-    .pipe(sass().on("error", sass.logError))
+    .pipe(
+      sass().on("error", (sass) => {
+        log.error("css Error:", sass.message);
+        this.emit("end");
+      })
+    )
     .pipe(gulp.dest("./public/css"));
 
   return new Promise((resolve, reject) => {
