@@ -8,6 +8,8 @@ const sass = gulpSass(sassMolde);
 import { spawn } from "child_process";
 import watchify from "watchify";
 import log from "fancy-log";
+import buffer from "vinyl-buffer";
+import uglify from "gulp-uglify";
 // import dotenv from "gulp-dotenv";
 // import rename from "gulp-rename";
 
@@ -125,7 +127,9 @@ function bundleJs(bundler) {
       this.emit("end");
     })
     .pipe(source("bundle.js"))
-    .pipe(gulp.dest("public"));
+    .pipe(buffer())
+    .pipe(uglify())
+    .pipe(gulp.dest("./public/js"));
 }
 
 gulp.task("bundle-js", function () {
@@ -139,6 +143,7 @@ gulp.task("bundle-js", function () {
   }).plugin(tsify);
 
   bundler.on("update", () => bundleJs(bundler));
+  bundler.on("log", log);
 
   return bundleJs(bundler);
 });
