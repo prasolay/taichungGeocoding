@@ -21,7 +21,7 @@
 {
   "compilerOptions": {
     "noImplicitAny": true,
-    "target": "es6",
+    "target": "es5",
     "baseUrl": "./src",
     "paths": {
       "ol/*": ["../node_modules/ol/*"] // 設定 ol 模組的路徑
