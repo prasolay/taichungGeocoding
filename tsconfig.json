@@ -22,12 +22,14 @@
   "compilerOptions": {
     "noImplicitAny": true,
     "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "baseUrl": "./src",
     "paths": {
       "ol/*": ["../node_modules/ol/*"] // 設定 ol 模組的路徑
     }
   },
   "forceConcientCasingInFileNames": true,
-  "include": ["./src/**/*.ts"],
+  "include": ["./src/**/*.ts", "src/js/greet.js"],
   "exclude": ["./node_modules"]
 }

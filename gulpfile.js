@@ -9,7 +9,11 @@ import { spawn } from "child_process";
 import watchify from "watchify";
 import log from "fancy-log";
 import buffer from "vinyl-buffer";
-import uglify from "gulp-uglify";
+import uglify from "gulp-uglify-es";
+import sourcemaps from "gulp-sourcemaps";
+import realpathify from "realpathify";
+import babelify from "babelify";
+
 // import dotenv from "gulp-dotenv";
 // import rename from "gulp-rename";
 
@@ -121,6 +125,19 @@ gulp.task("css", function () {
 parallelList.push("bundle-js");
 function bundleJs(bundler) {
   return bundler
+    .plugin(realpathify)
+    .transform(babelify, {
+      extensions: [".js", ".ts"],
+      presets: [
+        [
+          "@babel/preset-env",
+          {
+            useBuiltIns: "entry",
+            corejs: "3.22",
+          },
+        ],
+      ],
+    })
     .bundle()
     .on("error", (err) => {
       log.error("Bundle Error:", err.message);
@@ -128,7 +145,8 @@ function bundleJs(bundler) {
     })
     .pipe(source("bundle.js"))
     .pipe(buffer())
-    .pipe(uglify())
+    .pipe(sourcemaps.init({ loadMaps: true }))
+    .pipe(sourcemaps.write("./"))
     .pipe(gulp.dest("./public/js"));
 }
 
@@ -148,19 +166,19 @@ gulp.task("bundle-js", function () {
   return bundleJs(bundler);
 });
 
-function jsBundle() {
-  return watchedBrowserify
-    .bundle()
-    .pipe(source("bundle.js"))
-    .pipe(gulp.dest("public"));
-}
+// function jsBundle() {
+//   return watchedBrowserify
+//     .bundle()
+//     .pipe(source("bundle.js"))
+//     .pipe(gulp.dest("public"));
+// }
 
-function cssBundle() {
-  const css = ["./src/css/*.scss"];
-  return watchedBrowserify
-    .pipe(sass().on("error", sass.logError))
-    .pipe(gulp.dest("./public/css"));
-}
+// function cssBundle() {
+//   const css = ["./src/css/*.scss"];
+//   return watchedBrowserify
+//     .pipe(sass().on("error", sass.logError))
+//     .pipe(gulp.dest("./public/css"));
+// }
 
 // gulp.task(
 //   "default",

@@ -1,10 +1,14 @@
-import Map from 'ol/Map.js';
-import OSM from 'ol/source/OSM.js';
-import TileLayer from 'ol/layer/Tile.js';
-import View from 'ol/View.js';
+import Map from "ol/Map.js";
+import OSM from "ol/source/OSM.js";
+import TileLayer from "ol/layer/Tile.js";
+import View from "ol/View.js";
 
-export const ol_map = new Map({
-  target: 'map',
+export function testFunction01() {
+  console.log("進入openlayers成功!");
+}
+
+export var ol_map = new Map({
+  target: "map",
   layers: [
     new TileLayer({
       source: new OSM(),
@@ -15,4 +19,3 @@ export const ol_map = new Map({
     zoom: 2,
   }),
 });
-

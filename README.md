@@ -25,6 +25,9 @@
 14. npm install gulp-dotenv gulp-rename --save
 15. npm install --save-dev watchify
 16. npm install @types/openlayers
+17. npm install realpathify vinyl-buffer gulp-sourcemaps babelify --save-dev
+18. npm install babel-preset-env --save-dev
+19. npm install --save-dev @babel/preset-env
 ## 運作專案檔案腳本
 正式環境:
 
