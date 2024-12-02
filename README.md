@@ -45,3 +45,66 @@
    ```
    
    ```
+
+
+## 已知問題
+1. 讀取ol模組時會出現重大狀況
+   1. 
+      ``` cmd
+         Error: 'import' and 'export' may appear only with 'sourceType: module'
+      ```
+      說明：引用o模組時，會出現引用錯誤，即使已經把.ts模組修改成使用esm方式進行引用，也確認自己撰寫的.ts檔案符合esm架構，並且也可以順利被引用。但是只要引入o模組時就醫定會出現問題。
+
+      解決方法：放棄使用gulp使用，改使用「webpack」或者是「parcel」，確保引入進來的.js不論是cjs或者是esm都不會有間容問題。
+
+      完整error
+      ```cmd
+      [15:58:38] Bundle Error: 'import' and 'export' may appear only with 'sourceType: module'
+      [15:58:38] 'bundle-js' errored after 3.07 s
+      [15:58:38] TypeError: Cannot read properties of undefined (reading 'emit')
+         at Readable.<anonymous> (file:///D:/work_area/sideProject/taichungGeocoding/gulpfile.js:145:12)
+         at Readable.emit (node:events:531:35)
+         at Readable.emit (node:domain:488:12)
+         at Labeled.<anonymous> (D:\work_area\sideProject\taichungGeocoding\node_modules\read-only-stream\index.js:28:44)
+         at Labeled.emit (node:events:519:28)
+         at Labeled.emit (node:domain:488:12)
+         at Labeled.<anonymous> (D:\work_area\sideProject\taichungGeocoding\node_modules\stream-splicer\index.js:130:18)
+         at Labeled.emit (node:events:531:35)
+         at Labeled.emit (node:domain:488:12)
+         at DestroyableTransform.<anonymous> (D:\work_area\sideProject\taichungGeocoding\node_modules\stream-splicer\index.js:130:18)
+         at DestroyableTransform.emit (node:events:519:28)
+         at DestroyableTransform.emit (node:domain:488:12)
+         at DestroyableTransform._transform (D:\work_area\sideProject\taichungGeocoding\node_modules\browserify\index.js:708:34)
+         at Transform._read (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_transform.js:184:10)
+         at Transform._write (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_transform.js:172:83)
+         at Pipeline._write (D:\work_area\sideProject\taichungGeocoding\node_modules\stream-splicer\index.js:70:22)
+         at doWrite (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_writable.js:428:64)
+         at writeOrBuffer (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_writable.js:417:5)
+         at Writable.write (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_writable.js:334:11)
+         at Labeled.ondata (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_readable.js:619:20)
+         at Labeled.emit (node:events:519:28)
+         at Labeled.emit (node:domain:551:15)
+         at addChunk (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_readable.js:291:12)
+         at readableAddChunk (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_readable.js:278:11)
+         at Readable.push (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_readable.js:245:10)
+         at Pipeline._read (D:\work_area\sideProject\taichungGeocoding\node_modules\stream-splicer\index.js:54:31)
+         at DestroyableTransform.onreadable (D:\work_area\sideProject\taichungGeocoding\node_modules\stream-splicer\index.js:61:18)
+         at Object.onceWrapper (node:events:633:28)
+         at DestroyableTransform.emit (node:events:519:28)
+         at DestroyableTransform.emit (node:domain:551:15)
+         at emitReadable_ (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_readable.js:504:10)
+         at emitReadable (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_readable.js:498:62)
+         at addChunk (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_readable.js:298:29)
+         at readableAddChunk (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_readable.js:278:11)
+         at Readable.push (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_readable.js:245:10)
+      ream\lib\_stream_writable.js:417:5)
+         at Writable.write (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_writable.js:334:11)
+         at Labeled.ondata (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_readable.js:619:20)
+         at Labeled.emit (node:events:519:28)
+         at Labeled.emit (node:domain:551:15)
+         at addChunk (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_readable.js:291:12)
+         at readableAddChunk (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_readable.js:278:11)
+         at Readable.push (D:\work_area\sideProject\taichungGeocoding\node_modules\readable-stream\lib\_stream_readable.js:245:10)
+         at Pipeline._read (D:\work_area\sideProject\taichungGeocoding\node_modules\stream-splicer\index.js:54:31)
+      [15:58:38] 'default' errored after 3.09 s
+      ```

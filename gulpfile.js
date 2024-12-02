@@ -11,7 +11,7 @@ import log from "fancy-log";
 import buffer from "vinyl-buffer";
 import uglify from "gulp-uglify-es";
 import sourcemaps from "gulp-sourcemaps";
-import realpathify from "realpathify";
+// import realpathify from "realpathify";
 import babelify from "babelify";
 
 // import dotenv from "gulp-dotenv";
@@ -125,15 +125,16 @@ gulp.task("css", function () {
 parallelList.push("bundle-js");
 function bundleJs(bundler) {
   return bundler
-    .plugin(realpathify)
+    .plugin(tsify)
     .transform(babelify, {
       extensions: [".js", ".ts"],
       presets: [
         [
           "@babel/preset-env",
           {
-            useBuiltIns: "entry",
-            corejs: "3.22",
+            targets: {
+              esmodules: true,
+            },
           },
         ],
       ],
@@ -158,7 +159,7 @@ gulp.task("bundle-js", function () {
     cache: {},
     packageCache: {},
     plugin: [watchify],
-  }).plugin(tsify);
+  });
 
   bundler.on("update", () => bundleJs(bundler));
   bundler.on("log", log);
